@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # YouTube 字幕取得アプリ
 
 このアプリは、Streamlit と youtube-transcript-api を利用して、
@@ -20,3 +21,6 @@
 3. **依存パッケージのインストール**
    ```bash
    pip install -r requirements.txt
+=======
+# youtube-transcript
+>>>>>>> 364805e7d4551a0659b4f88c8c28b567df73a6cb
