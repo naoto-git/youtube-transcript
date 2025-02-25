@@ -26,7 +26,7 @@ def get_youtube_transcript(youtube_url, language=["ja"]):
         return f"字幕取得中にエラーが発生しました: {str(e)}"
 
 def main():
-    st.title("YouTube 字幕取得アプリ")
+    st.title("YouTube 字幕取得")
     st.write("YouTube の URL を入力して、動画の字幕を取得します。")
     
     url = st.text_input("YouTube 動画の URL を入力してください")
