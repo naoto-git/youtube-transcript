@@ -2,6 +2,7 @@ import streamlit as st
 from youtube_transcript_api import YouTubeTranscriptApi
 import re
 
+
 @st.cache_data(show_spinner=False)
 def get_transcript(video_id, language):
     transcript_list = YouTubeTranscriptApi.get_transcript(video_id, languages=language)
