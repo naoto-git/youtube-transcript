@@ -20,22 +20,33 @@ def get_youtube_transcript(youtube_url, language=["ja"], translation=None):
     video_id = get_video_id(youtube_url)
     if video_id is None:
         return "無効な YouTube URL です。"
+
     try:
+        # 字幕を取得して、各チャンクの "text" を改行で結合
         transcript_list = YouTubeTranscriptApi.get_transcript(video_id, languages=language)
         transcript_text = "\n".join([item["text"] for item in transcript_list])
+        
+        # もし強制改行(19文字ごと)が気になる場合は、スペースで連結などに変更：
+        transcript_text = " ".join([item["text"] for item in transcript_list])
+
         return transcript_text
     except Exception as e:
         return f"字幕取得中にエラーが発生しました: {str(e)}"
 
 def main():
-    st.title("YouTube 字幕取得アプリ")
+    st.title("YouTube 字幕取得")
     st.write("YouTube の URL を入力して、動画の字幕を取得します。")
-    
+
+    # テキスト入力欄
     url = st.text_input("YouTube 動画の URL を入力してください")
-    if url:
+
+    # 「字幕取得」ボタンを用意し、押されたときのみ処理
+    if st.button("字幕取得"):
         transcript_text = get_youtube_transcript(youtube_url=url, language=["ja"], translation=None)
+        
+        # 取得した字幕を表示（st.code を使うとコピーアイコンが表示される）
         st.subheader("取得した字幕")
-        st.text_area("字幕", transcript_text, height=400)
+        st.code(transcript_text, language="plaintext")
 
 if __name__ == "__main__":
     main()
