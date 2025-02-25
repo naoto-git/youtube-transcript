@@ -33,7 +33,7 @@ def main():
     url = st.text_input("YouTube 動画の URL を入力してください")
     if st.button("字幕取得"):
         transcript_text = get_youtube_transcript(youtube_url=url, language=["ja"])
-        st.subheader("取得した字幕（コピー可能）")
+        st.subheader("取得した字幕")
         st.code(transcript_text, language="plaintext")
 
 if __name__ == "__main__":
