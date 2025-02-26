@@ -3,9 +3,9 @@ from youtube_transcript_api import YouTubeTranscriptApi
 import re
 
 @st.cache_data(show_spinner=False)
-def get_transcript(video_id, language):
-    transcript_list = YouTubeTranscriptApi.get_transcript(video_id, languages=language)
-    # 各セグメント内の改行をスペースに置換し、セグメント間はスペースで結合
+def get_transcript(video_id, languages):
+    transcript_list = YouTubeTranscriptApi.get_transcript(video_id, languages=languages)
+    # 各字幕セグメント内の改行をスペースに置換し、セグメント間はスペースで結合
     transcript_text = " ".join([item["text"].replace("\n", " ") for item in transcript_list])
     return transcript_text
 
@@ -34,8 +34,18 @@ def main():
     if st.button("字幕取得"):
         transcript_text = get_youtube_transcript(youtube_url=url, languages=["ja", "en"])
         st.subheader("取得した字幕")
-        # <pre> タグの white-space: nowrap; で自動折返しを防止
-        st.markdown(f"<pre style='white-space: nowrap;'>{transcript_text}</pre>", unsafe_allow_html=True)
+        # カスタムCSSを注入して、コードブロックの自動折返しを解除
+        st.markdown(
+            """
+            <style>
+            .stCodeBlock pre {
+                white-space: nowrap;
+            }
+            </style>
+            """,
+            unsafe_allow_html=True,
+        )
+        st.code(transcript_text, language="plaintext")
 
 if __name__ == "__main__":
     main()
